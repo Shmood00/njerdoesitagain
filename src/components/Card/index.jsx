@@ -6,18 +6,14 @@ import { useRef, useState } from 'react';
 import Modal from '../Modal'
 import { useMediaQuery } from 'react-responsive';
 
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css'
+import 'react-awesome-slider/dist/custom-animations/open-animation.css'
 
 
 const Card = ({ i, title, description, src, color, rgbColor, progress, range, targetScale, carousel }) => {
 
-    const options = {
-        loop: true,
-        margin: 10,
-        items: 1,
-        autoplay: true
-    }
 
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -321,7 +317,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                                 className={styles.inner}
                                 id="imgInner"
                                 style={{ scale: imageScale, opacity: 1 }}
-                                whileHover={{ opacity: 0.93}}
+                                whileHover={{ opacity: 0.93 }}
                                 variants={imgInnerSettings}
                                 animate={imgInnerAnimate}
 
@@ -329,25 +325,26 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
                                 {carousel ?
 
-                                    <Carousel
-
-                                        useKeyboardArrows={true}
-                                        swipeable={true}
-                                        showThumbs={false}
-                                        emulateTouch={true}
-                                        infiniteLoop={true}
-                                        showIndicators={false}
-
+                                    <AwesomeSlider
+                                        style={{ height: "100%" }}
+                                        bullets={false}
+                                        infinite={true}
+                                        fillParent={true}
+                                        animation='openAnimation'
+                                        
                                     >
                                         {
                                             src.map((img, index) => {
                                                 return (
 
                                                     <div key={index}>
-                                                        <img
-                                                            id={`artPiece-${i}`}
+                                                        <Image
 
+                                                            fill={true}
+                                                            id={`artPiece-${i}`}
                                                             src={`/images/${img}`}
+                                                            placeholder='blur'
+                                                            blurDataURL={rgbColor}
 
                                                         />
                                                     </div>
@@ -357,7 +354,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                                             })
                                         }
 
-                                    </Carousel>
+                                    </AwesomeSlider>
 
 
 
@@ -368,10 +365,10 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                                         alt="image"
                                         placeholder="blur"
                                         blurDataURL={rgbColor}
-                                        
+
 
                                     />
-                                    
+
                                 }
 
                             </motion.div>
@@ -381,7 +378,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
                 </motion.div>
 
-                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} isCarousel={carousel} />}
+                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} isCarousel={carousel} rgbColor={rgbColor}/>}
 
 
             </motion.div>

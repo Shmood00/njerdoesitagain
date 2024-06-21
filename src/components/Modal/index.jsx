@@ -4,8 +4,10 @@ import styles from './style.module.scss'
 import Image from 'next/image';
 import { useMediaQuery } from "react-responsive";
 
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+import AwesomeSlider from "react-awesome-slider";
+import 'react-awesome-slider/dist/styles.css'
+
 
 const dropIn = {
     hidden: {
@@ -29,7 +31,7 @@ const dropIn = {
 };
 
 
-const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel }) => {
+const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbColor }) => {
 
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
 
@@ -49,23 +51,22 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel }) => 
                 >
 
                     {isCarousel ?
-                        <Carousel
-                            autoPlay={true}
-                            infiniteLoop={true}
-                            useKeyboardArrows={true}
-                            autoFocus={true}
-                            swipeable={true}
-                            showThumbs={false}
+                        <AwesomeSlider
+                            style={{height: "100%"}}
+                            bullets={false}
+                            infinite={true}
                         >
                             {
                                 imSrc.map((img, index) => {
                                     return (
 
                                         <div key={index}>
-                                            <img
+                                            <Image
+                                                fill={true}
                                                 id={`artPiece-${i}`}
-
                                                 src={`/images/${img}`}
+                                                placeholder="blur"
+                                                blurDataURL={rgbColor}
 
                                             />
                                         </div>
@@ -74,7 +75,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel }) => 
 
                                 })
                             }
-                        </Carousel>
+                        </AwesomeSlider>
                         :
                         <Image
                             fill
