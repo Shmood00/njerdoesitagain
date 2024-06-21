@@ -1,13 +1,23 @@
 'use client'
 import Image from 'next/image';
 import styles from './style.module.scss';
-import { useTransform, motion, useScroll, AnimatePresence, useAnimationControls, stagger } from 'framer-motion';
+import { useTransform, motion, useScroll, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Modal from '../Modal'
 import { useMediaQuery } from 'react-responsive';
 
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const Card = ({ i, title, description, src, color, rgbColor, progress, range, targetScale, linearGradient }) => {
+
+const Card = ({ i, title, description, src, color, rgbColor, progress, range, targetScale, carousel }) => {
+
+    const options = {
+        loop: true,
+        margin: 10,
+        items: 1,
+        autoplay: true
+    }
 
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -24,7 +34,6 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
     const [modalOpen, setModalOpen] = useState(false);
 
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
-
 
 
     const settings = {
@@ -60,12 +69,16 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
     const animateTitle = {
         slideLeft: {
             textAlign: "left",
-            width: "30%"
+            width: "30%",
+            paddingTop: "50px",
+            top: "0",
+            position: "sticky"
         },
 
         slideBack: {
             textAlign: "center",
-            width: "100%"
+            width: "100%",
+            paddingTop: "0px"
         },
 
 
@@ -73,11 +86,20 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
     const animateDescription = {
         changeDescWidth: {
-            width: "20%"
+            width: "20%",
+            paddingTop: "80px",
+            top: "0",
+            position: "sticky",
+            alignSelf: "flex-start",
+            height: "auto"
+
         },
 
         descWidth: {
-            width: "40%"
+            width: "40%",
+            paddingTop: "0",
+            position: "relative",
+            alignSelf: "unset"
         }
     }
 
@@ -118,13 +140,37 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         }
     }
 
+    const imgInnerSettings = {
+        resize: {
+            width: "80%",
+            height: "100%"
+        },
+
+        exit: {
+            width: "100%",
+            height: "100%"
+        }
+    }
+
+    const h3Animate = {
+        normal: {
+            opacity: 0,
+        },
+
+        animateh3: {
+            opacity: 1,
+            color: "#ffffff"
+        }
+    }
 
     const controls = useAnimationControls();
-    const newControl = useAnimationControls();
+    const triggerTitleAnimation = useAnimationControls();
     const controlDescription = useAnimationControls();
     const imContainerAnimation = useAnimationControls();
     const bodyAnimate = useAnimationControls();
     const cardContainerAnimate = useAnimationControls();
+    const imgInnerAnimate = useAnimationControls();
+    const triggerh3 = useAnimationControls();
 
     const close = () => {
 
@@ -136,7 +182,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
         controls.start('exit');
 
-        newControl.start('slideBack');
+        triggerTitleAnimation.start('slideBack');
 
         controlDescription.start("descWidth");
 
@@ -145,6 +191,10 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         bodyAnimate.start("back");
 
         cardContainerAnimate.start("revert");
+
+        imgInnerAnimate.start("exit");
+
+        triggerh3.start("normal");
 
         artPiece.style.objectFit = "cover";
 
@@ -164,8 +214,8 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
         controls.start('move');
 
-        
-        newControl.start("slideLeft");
+
+        triggerTitleAnimation.start("slideLeft");
 
         controlDescription.start("changeDescWidth");
 
@@ -175,9 +225,12 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
         cardContainerAnimate.start("display");
 
+        imgInnerAnimate.start("resize");
+
+        triggerh3.start("animateh3");
+
 
         artPiece.style.objectFit = "contain";
-
 
 
         setModalOpen(true);
@@ -192,10 +245,12 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
     return (
 
+
         <AnimatePresence
             initial={false}
             onExitComplete={() => null}
         >
+
             <motion.div
                 ref={container}
                 className={styles.cardContainer}
@@ -220,11 +275,26 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                     <motion.h2
 
                         variants={animateTitle}
-                        animate={newControl}
+                        animate={triggerTitleAnimation}
+
 
                     >
                         {title}
                     </motion.h2>
+                    {(carousel && modalOpen) ?
+                        <motion.h3
+                            variants={h3Animate}
+                            animate={triggerh3}
+                            initial="normal"
+
+                            onClick={() => close()}
+                            whileHover={{ fontStyle: "italic", cursor: "pointer" }}
+                        >
+                            &times;
+                        </motion.h3>
+                        :
+                        null
+                    }
                     <motion.div
                         className={styles.body}
                         variants={overallBody}
@@ -234,6 +304,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                         <motion.div className={styles.description} id="imgDescription"
                             variants={animateDescription}
                             animate={controlDescription}
+
                         >
                             <p>{description}</p>
                         </motion.div>
@@ -241,7 +312,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                         <motion.div
                             id={i}
                             className={styles.imageContainer}
-                            onClick={() => (modalOpen ? close() : open())}
+                            onClick={() => ((!carousel && modalOpen) ? close() : open())}
                             variants={imContainer}
                             animate={imContainerAnimation}
                         >
@@ -250,19 +321,59 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                                 className={styles.inner}
                                 id="imgInner"
                                 style={{ scale: imageScale, opacity: 1 }}
-                                whileHover={{ opacity: 0.93 }}
-                                
+                                whileHover={{ opacity: 0.93}}
+                                variants={imgInnerSettings}
+                                animate={imgInnerAnimate}
 
                             >
-                                <Image
-                                    id={`artPiece-${i}`}
-                                    fill={true}
-                                    src={`/images/${src}`}
-                                    alt="image"
-                                    placeholder="blur"
-                                    blurDataURL={rgbColor}
 
-                                />
+                                {carousel ?
+
+                                    <Carousel
+
+                                        useKeyboardArrows={true}
+                                        swipeable={true}
+                                        showThumbs={false}
+                                        emulateTouch={true}
+                                        infiniteLoop={true}
+                                        showIndicators={false}
+
+                                    >
+                                        {
+                                            src.map((img, index) => {
+                                                return (
+
+                                                    <div key={index}>
+                                                        <img
+                                                            id={`artPiece-${i}`}
+
+                                                            src={`/images/${img}`}
+
+                                                        />
+                                                    </div>
+
+                                                )
+
+                                            })
+                                        }
+
+                                    </Carousel>
+
+
+
+                                    : <Image
+                                        id={`artPiece-${i}`}
+                                        fill={true}
+                                        src={`/images/${src[0]}`}
+                                        alt="image"
+                                        placeholder="blur"
+                                        blurDataURL={rgbColor}
+                                        
+
+                                    />
+                                    
+                                }
+
                             </motion.div>
                         </motion.div>
 
@@ -270,7 +381,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
                 </motion.div>
 
-                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} />}
+                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} isCarousel={carousel} />}
 
 
             </motion.div>

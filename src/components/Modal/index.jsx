@@ -4,6 +4,9 @@ import styles from './style.module.scss'
 import Image from 'next/image';
 import { useMediaQuery } from "react-responsive";
 
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 const dropIn = {
     hidden: {
         y: "-100vh",
@@ -26,7 +29,7 @@ const dropIn = {
 };
 
 
-const Modal = ({ handleClose, imSrc, i, progress, range, targ }) => {
+const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel }) => {
 
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
 
@@ -41,19 +44,47 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ }) => {
                     variants={dropIn}
                     initial="hidden"
                     animate="visible"
-                    exit="exit"                
+                    exit="exit"
 
                 >
 
-                    <Image
-                        fill
-                        src={`/images/${imSrc}`}
-                        alt="im"
-                        placeholder="blur"
-                        blurDataURL={`/images/${imSrc}`}
-                        onClick={handleClose}
-                        style={{ top: `calc(-5vh + ${i * 25}px)` }}
-                    />
+                    {isCarousel ?
+                        <Carousel
+                            autoPlay={true}
+                            infiniteLoop={true}
+                            useKeyboardArrows={true}
+                            autoFocus={true}
+                            swipeable={true}
+                            showThumbs={false}
+                        >
+                            {
+                                imSrc.map((img, index) => {
+                                    return (
+
+                                        <div key={index}>
+                                            <img
+                                                id={`artPiece-${i}`}
+
+                                                src={`/images/${img}`}
+
+                                            />
+                                        </div>
+
+                                    )
+
+                                })
+                            }
+                        </Carousel>
+                        :
+                        <Image
+                            fill
+                            src={`/images/${imSrc[[0]]}`}
+                            alt="im"
+                            
+                            onClick={handleClose}
+                            style={{ top: `calc(-5vh + ${i * 25}px)` }}
+                        />
+                    }
                     <span className={styles.close} onClick={handleClose}>
                         &times;
                     </span>
@@ -73,10 +104,10 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ }) => {
 
                 <Image
                     fill
-                    src={`/images/${imSrc}`}
+                    src={`/images/${imSrc[0]}`}
                     alt="im"
-                    placeholder="blur"
-                    blurDataURL={`/images/${imSrc}`}
+                    //placeholder="blur"
+                    //blurDataURL={`/images/${imSrc}`}
                     onClick={handleClose}
                     style={{ top: `calc(-5vh + ${i * 25}px)` }}
                 />

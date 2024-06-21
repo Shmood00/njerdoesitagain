@@ -17,7 +17,7 @@
         padding: 50px;
         transform-origin: top;
         //background: inherit;
-        
+
 
         //box-shadow: rgba(238, 236, 236, 0.548) 0px 25px 50px -12px;
 
@@ -27,12 +27,25 @@
             font-size: 28px;
         }
 
+        h3 {
+            position: absolute;
+            top: 50px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1;
+        }
+
         .body {
             display: flex;
             height: 100%;
             margin-top: 50px;
             gap: 50px;
-            overflow: hidden;
+            //overflow: hidden;
+            contain: size;
+            justify-content: space-between;
 
             .description {
                 width: 40%;
@@ -66,8 +79,12 @@
                 position: relative;
                 width: 60%;
                 height: 100%;
-                border-radius: 25px;
+                border-radius: 25px 25px 25px 25px;
                 overflow: hidden;
+
+                //new
+                display: flex;
+                justify-content: center;
 
                 .inner {
                     width: 100%;
