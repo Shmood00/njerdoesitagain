@@ -23,7 +23,7 @@ export default function About() {
                 }}
                 
             >
-                <h1>Test</h1>
+                <h1>Hi, I&apos;m Njeri!</h1>
                 <div className={styles.body}>
                     <div className={styles.description}>
                         <p>This is some text</p>
