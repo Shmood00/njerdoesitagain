@@ -64,6 +64,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
                                             <Image
                                                 fill={true}
                                                 id={`artPiece-${i}`}
+                                                alt="im"
                                                 src={`/images/${img}`}
                                                 placeholder="blur"
                                                 blurDataURL={rgbColor}
