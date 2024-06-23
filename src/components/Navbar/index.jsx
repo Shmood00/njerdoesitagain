@@ -7,6 +7,9 @@ import styles from './style.module.scss'
 import { usePathname } from 'next/navigation';
 import { useMediaQuery } from 'react-responsive';
 
+//Navbar component provided from:
+// https://codesandbox.io/p/sandbox/framer-motion-mobile-nav-f7z9m
+
 const Navbar = () => {
 
     const currentPath = usePathname();
