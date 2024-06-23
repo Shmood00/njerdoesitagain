@@ -344,6 +344,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
                                                             fill={true}
                                                             id={`artPiece-${i}`}
+                                                            alt="im"
                                                             src={`/images/${img}`}
                                                             placeholder='blur'
                                                             blurDataURL={rgbColor}
