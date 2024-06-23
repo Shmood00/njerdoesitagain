@@ -11,6 +11,8 @@ import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css'
 import 'react-awesome-slider/dist/custom-animations/open-animation.css'
 
+//Card components / sroll animation provided by:
+// https://www.youtube.com/watch?v=am0ZueQmpzg&t=619s
 
 const Card = ({ i, title, description, src, color, rgbColor, progress, range, targetScale, carousel }) => {
 
