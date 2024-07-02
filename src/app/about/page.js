@@ -32,7 +32,7 @@ export default function About() {
                         <div className={styles.inner}>
                             <Image
                                 fill={true}
-                                src={`/images/me.jpeg`}
+                                src={`/images/me.jpg`}
                                 alt="image"
                             >
 
