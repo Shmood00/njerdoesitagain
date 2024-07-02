@@ -49,6 +49,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
             borderRadius: "0px 0px 0px 0px",
             backgroundColor: "#000000",
             color: "#ffffff"
+            
         },
 
         exit: {
@@ -61,6 +62,16 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         },
 
 
+    }
+
+    const changeFont = {
+        fontChange: {
+            fontSize: "20px"
+        },
+
+        fontNormal: {
+            fontSize: "16px"
+        }
     }
 
 
@@ -169,6 +180,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
     const cardContainerAnimate = useAnimationControls();
     const imgInnerAnimate = useAnimationControls();
     const triggerh3 = useAnimationControls();
+    const fontAnimate = useAnimationControls();
 
     const close = () => {
 
@@ -179,6 +191,8 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         setModalOpen(false);
 
         controls.start('exit');
+
+        fontAnimate.start('fontNormal');
 
         triggerTitleAnimation.start('slideBack');
 
@@ -211,6 +225,9 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         var artPiece = document.getElementById("artPiece-" + i);
 
         controls.start('move');
+
+        fontAnimate.start('fontChange');
+        
 
 
         triggerTitleAnimation.start("slideLeft");
@@ -304,7 +321,14 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                             animate={controlDescription}
 
                         >
-                            <p>{description}</p>
+                            <motion.p
+                                variants={changeFont}
+                                animate={fontAnimate}
+                            >
+                                
+                                {description}
+                            
+                            </motion.p>
                         </motion.div>
 
                         <motion.div
