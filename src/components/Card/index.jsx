@@ -81,13 +81,15 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
             width: "30%",
             paddingTop: "50px",
             top: "0",
-            position: "sticky"
+            position: "sticky",
+            fontSize: "35px"
         },
 
         slideBack: {
             textAlign: "center",
             width: "100%",
-            paddingTop: "0px"
+            paddingTop: "0px",
+            fontSize: "28px"
         },
 
 
@@ -171,6 +173,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
             color: "#ffffff"
         }
     }
+    
 
     const controls = useAnimationControls();
     const triggerTitleAnimation = useAnimationControls();
