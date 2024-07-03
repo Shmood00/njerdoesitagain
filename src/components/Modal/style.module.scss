@@ -19,6 +19,23 @@
         object-fit: contain;
     }
 
+    .caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: left;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+
+
+        &::first-letter {
+            font-size: 28px;
+            font-family: 'Title';
+        }
+    }
+
     .close {
         position: absolute;
         top: 50px;

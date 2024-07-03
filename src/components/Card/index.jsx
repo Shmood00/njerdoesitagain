@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import styles from './style.module.scss';
 import { useTransform, motion, useScroll, AnimatePresence, useAnimationControls } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Modal from '../Modal'
 import { useMediaQuery } from 'react-responsive';
 
@@ -49,7 +49,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
             borderRadius: "0px 0px 0px 0px",
             backgroundColor: "#000000",
             color: "#ffffff"
-            
+
         },
 
         exit: {
@@ -173,7 +173,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
             color: "#ffffff"
         }
     }
-    
+
 
     const controls = useAnimationControls();
     const triggerTitleAnimation = useAnimationControls();
@@ -230,7 +230,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
         controls.start('move');
 
         fontAnimate.start('fontChange');
-        
+
 
 
         triggerTitleAnimation.start("slideLeft");
@@ -259,6 +259,13 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
 
     };
+
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if(!mounted) return <></>
 
 
     return (
@@ -319,20 +326,23 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                         animate={bodyAnimate}
                         id="cardBody"
                     >
-                        <motion.div className={styles.description} id="imgDescription"
-                            variants={animateDescription}
-                            animate={controlDescription}
+                        {!isMobile ?
+                            <motion.div className={styles.description} id="imgDescription"
+                                variants={animateDescription}
+                                animate={controlDescription}
 
-                        >
-                            <motion.p
-                                variants={changeFont}
-                                animate={fontAnimate}
                             >
-                                
-                                {description}
-                            
-                            </motion.p>
-                        </motion.div>
+                                <motion.p
+                                    variants={changeFont}
+                                    animate={fontAnimate}
+                                >
+
+                                    {description}
+
+                                </motion.p>
+                            </motion.div>
+                            : null
+                        }
 
                         <motion.div
                             id={i}
@@ -340,6 +350,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                             onClick={() => ((!carousel && modalOpen) ? close() : open())}
                             variants={imContainer}
                             animate={imContainerAnimation}
+                            style={isMobile ? { width: "100%" } : { width: "60%" }}
                         >
 
                             <motion.div
@@ -360,7 +371,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
                                         infinite={true}
                                         fillParent={true}
                                         animation='openAnimation'
-                                        
+
                                     >
                                         {
                                             src.map((img, index) => {
@@ -408,7 +419,7 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
                 </motion.div>
 
-                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} isCarousel={carousel} rgbColor={rgbColor}/>}
+                {(isMobile && modalOpen) && <Modal modalOpen={modalOpen} handleClose={close} imSrc={src} i={i} progress={progress} range={range} targ={targetScale} isCarousel={carousel} rgbColor={rgbColor} desc={description} />}
 
 
             </motion.div>
