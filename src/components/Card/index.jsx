@@ -260,13 +260,6 @@ const Card = ({ i, title, description, src, color, rgbColor, progress, range, ta
 
     };
 
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if(!mounted) return <></>
-
 
     return (
 

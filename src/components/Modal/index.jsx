@@ -45,7 +45,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
 
     
     if (!progress) progress = scrollYProgress;
-    if (!range) range = [1,1];
+    if (!range) range = [0,1];
     if (!i) i = 0;
 
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
