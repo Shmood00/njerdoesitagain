@@ -22,17 +22,19 @@
     .caption {
         margin: auto;
         display: block;
-        width: 80%;
+        width: 100vw;
         max-width: 700px;
         text-align: left;
         color: #ccc;
         padding: 10px 0;
-        height: 150px;
+        height: 100vh;
 
-
-        &::first-letter {
-            font-size: 28px;
-            font-family: 'Title';
+        p {
+            &::first-letter {
+                font-size: 28px;
+                font-family: 'Title';
+            }
+            overflow: scroll;
         }
     }
 

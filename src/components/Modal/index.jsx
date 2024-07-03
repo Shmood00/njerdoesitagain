@@ -1,4 +1,4 @@
-import { motion, useAnimationControls, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Backdrop from "../Backdrop";
 import styles from './style.module.scss'
 import Image from 'next/image';
@@ -45,14 +45,14 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
 
     
     if (!progress) progress = scrollYProgress;
-    if (!range) range = [1,1]
-
+    if (!range) range = [1,1];
+    if (!i) i = 0;
 
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
 
     var scale = useTransform(progress, range, [1, targ]);
 
-    if (!scale) scale = 1;
+    
 
     const [descOpen, setDescOpen] = useState(false);
 
@@ -65,8 +65,8 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
 
         desc.style.opacity = 1;
         desc.style.backgroundColor = "rgba(135, 130, 132, 0.95)";
-        desc.style.width = "100%";
-        desc.style.height = "100%";
+        desc.style.width = "100vw";
+        desc.style.height = "100vh";
         desc.style.position = "absolute";
         desc.style.color = "#000000";
         desc.style.zIndex = "1";
@@ -148,8 +148,6 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
                                 src={`/images/${imSrc[[0]]}`}
                                 alt="im"
 
-
-                                //onClick={handleClose}
                                 style={{ top: `calc(-5vh + ${i * 25}px)` }}
                             />
                             <motion.div
