@@ -52,11 +52,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
 
     var scale = useTransform(progress, range, [1, targ]);
 
-    
-
     const [descOpen, setDescOpen] = useState(false);
-
-    console.log(imSrc);
 
     const openDesc = () => {
         setDescOpen(true);
