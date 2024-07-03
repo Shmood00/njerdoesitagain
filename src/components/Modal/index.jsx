@@ -35,17 +35,6 @@ const dropIn = {
 
 
 const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbColor, desc }) => {
-    const test = {
-        showDesc: {
-            opacity: 1,
-            backgroundColor: "#ffffff",
-            width: "100vw",
-            height: "100vh",
-            position: "absolute",
-            zIndex: 1,
-            color: "#000000"
-        }
-    }
 
     const container = useRef(null);
 
@@ -54,7 +43,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
         offset: ['start start', 'end end']
     })
 
-    if (!scale) scale = 1;
+    
     if (!progress) progress = scrollYProgress;
     if (!range) range = [1,1]
 
@@ -62,6 +51,8 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
     const isMobile = useMediaQuery({ query: '(max-width: 720px)' });
 
     var scale = useTransform(progress, range, [1, targ]);
+
+    if (!scale) scale = 1;
 
     const [descOpen, setDescOpen] = useState(false);
 
