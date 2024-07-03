@@ -133,7 +133,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
 
                                 id={`caption-${i}`}
                             >
-                                {desc}
+                                <p>{desc}</p>
 
                             </motion.div>
                         </motion.div>
@@ -152,7 +152,7 @@ const Modal = ({ handleClose, imSrc, i, progress, range, targ, isCarousel, rgbCo
                                 id={`caption-${i}`}
 
                             >
-                                {desc}
+                                <p>{desc}</p>
                             </motion.div>
                         </motion.div>
                     }
